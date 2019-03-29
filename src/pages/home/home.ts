@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Http }from '@angular/http';
 import 'rxjs/add/operator/map'; 
+import {  DetailPage } from '../detail/detail'
 
 @Component({
   selector: 'page-home',
@@ -13,5 +14,8 @@ export class HomePage {
     this.http.get('http://localhost:8080/barbershop')
       .map(res=>res.json()).subscribe(data=>{this.barbershop=data;});
   }
+showDetail(id){
+    this.navCtrl.push( DetailPage,{barberid: id});
 
+  }
 }
