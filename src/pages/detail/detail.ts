@@ -21,6 +21,7 @@ export class DetailPage {
     let url = 'http://localhost:8080/barbershop/' + bid;
     console.log(url);
     this.http.get(url).map(res => res.json()).subscribe(data => {this.barbershop = data;});
+    console.log(this.barbershop);
 
 }
 
