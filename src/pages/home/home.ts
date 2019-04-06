@@ -3,6 +3,8 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Http }from '@angular/http';
 import 'rxjs/add/operator/map'; 
 import {  DetailPage } from '../detail/detail'
+import { NewbabaPage } from '../newbaba/newbaba'
+
 
 @Component({
   selector: 'page-home',
@@ -16,6 +18,12 @@ export class HomePage {
   }
 showDetail(id){
     this.navCtrl.push( DetailPage,{barberid: id});
+    
 
   }
+  newbarber()
+  {
+    this.navCtrl.push(NewbabaPage);
+  }  
+
 }
