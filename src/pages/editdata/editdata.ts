@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
-//import { HTTP } from '@ionic-native/http';
-
+import { Http } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 
 /**
- * Generated class for the NewbabaPage page.
+ * Generated class for the EditdataPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -13,10 +12,10 @@ import { HttpClient } from '@angular/common/http';
 
 @IonicPage()
 @Component({
-  selector: 'page-newbaba',
-  templateUrl: 'newbaba.html',
+  selector: 'page-editdata',
+  templateUrl: 'editdata.html',
 })
-export class NewbabaPage {
+export class EditdataPage {
   barbershop = {
     BabberID:"",
     BabberName:"",
@@ -24,22 +23,27 @@ export class NewbabaPage {
     TelBarber:"",
     Address:"",
   };
-  data : any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http:HttpClient,private alertCtrl:AlertController) {
+  data:any;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, private alertCtrl:AlertController, private httpClient:HttpClient ) {
+    let bid=this.navParams.get('barberid');
+    let url = "http://localhost:8080/barbershop/" + bid;
+    console.log(url)
+    this.http.get(url).map(res => res.json()).subscribe(data => {this.barbershop = data});
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad NewbabaPage');
+    console.log('ionViewDidLoad EditdataPage');
   }
-  addbarber(){
-    let url= "http://localhost:8080/barbershop";
+  editdata(){
+    let bid=this.navParams.get('barberid');
+    let url = "http://localhost:8080/barbershop/" + bid;
     console.log(this.barbershop);
-    this.http.post(url,this.barbershop)
+    this.httpClient.post(url,this.barbershop)
       .subscribe(
         res=>{
           this.data =res;
           if(this.data.msg==true){
-            this.showAlert("Success","Data added");
+            this.showAlert("Success","Edit Data");
             this.navCtrl.popToRoot();
           }
         }
@@ -55,4 +59,5 @@ export class NewbabaPage {
         //show alert
         alert.present();
     }
+
 }
